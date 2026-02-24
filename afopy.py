@@ -11,10 +11,11 @@ ACCEPT = {
 }
 
 def is_upper(c: str) -> bool:
-    return A <= c <= Z
+    return 'A' <= c <= 'Z'
 
 def is_lower(c: str) -> bool:
-    return a <= c <= z
+    """Minúsculas o dígitos para [a-z0-9]* en ID."""
+    return ('a' <= c <= 'z') or ('0' <= c <= '9')
 
 def move(state: set[int], c: str) -> set[int]:
     next = set()
@@ -27,8 +28,6 @@ def move(state: set[int], c: str) -> set[int]:
         elif s == 1:
             if c == '+':
                 next.add(2)
-            if is_lower(c):
-                next.add(4)
         elif s == 3:
             if is_lower(c):
                 next.add(4)
@@ -74,13 +73,13 @@ def token(text: str):
             
             j += 1
 
-            if best is None:
-                print("NO ACEPTA")
-                return
-            
-            lexema = text[i:best_end]
-            print(f"{best} \t {lexema}")
-            i = best_end
+        if best is None:
+            print("NO ACEPTA")
+            return
+
+        lexema = text[i:best_end]
+        print(f"{best}\t{lexema}")
+        i = best_end
 
 def main():
     if len(sys.argv) != 2:
